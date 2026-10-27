@@ -47,7 +47,7 @@ Posttest ini melanjutkan posttest sebelumnya (kelas `Pengguna`, `AlatBangunan`, 
 
 ## 1. 🗺️ Class Diagram & Relasi UML
 
-![Class Diagram](img/uml2.png)
+![Class Diagram](img/uml2.jpg)
 
 **Legenda:** △ segitiga kosong = pewarisan · → panah terbuka = asosiasi · ◇ belah ketupat kosong = agregasi · ◆ belah ketupat penuh = komposisi
 
