@@ -1,4 +1,4 @@
-# 🏗️ Posttest 3 PBO — Sistem Manajemen Inventori Alat Bangunan
+#  Posttest 3 PBO — Sistem Manajemen Inventori Alat Bangunan
 
 | | |
 |---|---|
@@ -23,10 +23,10 @@ Setiap perubahan stok selalu tercatat otomatis sebagai **kartu stok** (riwayat b
 
 Posttest ini melanjutkan posttest sebelumnya (kelas `Pengguna`, `AlatBangunan`, `Inventori`, serta pewarisan). Tambahan di posttest 3:
 
-- 🆕 **Abstraksi** — kelas abstrak `Transaksi` dengan subclass `TransaksiPenjualan` dan `TransaksiRestock`
-- 🆕 **Polimorfisme** — override method, duck typing (`EksporterTeks` & `EksporterCSV`), dan operator overloading
-- 🆕 **Class diagram UML** dengan relasi asosiasi, agregasi, dan komposisi yang benar-benar ada di kode
-- 🆕 **Penerapan SOLID** (OCP & DIP) sebagai nilai plus
+-  **Abstraksi** — kelas abstrak `Transaksi` dengan subclass `TransaksiPenjualan` dan `TransaksiRestock`
+-  **Polimorfisme** — override method, duck typing (`EksporterTeks` & `EksporterCSV`), dan operator overloading
+-  **Class diagram UML** dengan relasi asosiasi, agregasi, dan komposisi yang benar-benar ada di kode
+-  **Penerapan SOLID** (OCP & DIP) sebagai nilai plus
 
 
 ### Daftar Kelas
@@ -45,7 +45,7 @@ Posttest ini melanjutkan posttest sebelumnya (kelas `Pengguna`, `AlatBangunan`, 
 
 ---
 
-## 1. 🗺️ Class Diagram & Relasi UML
+## 1. Class Diagram & Relasi UML
 
 ![Class Diagram](img/uml2.jpg)
 
@@ -53,22 +53,22 @@ Posttest ini melanjutkan posttest sebelumnya (kelas `Pengguna`, `AlatBangunan`, 
 
 ### Penjelasan Relasi
 
-#### 🔴 Asosiasi — `Admin` / `Kasir` / `Manager` → `Inventori`, dan `Transaksi` → `Inventori`
+####  Asosiasi — `Admin` / `Kasir` / `Manager` → `Inventori`, dan `Transaksi` → `Inventori`
 Kelas-kelas ini hanya **menggunakan** `Inventori` yang diterima lewat parameter method, tanpa menyimpannya sebagai atribut. Contohnya `Admin.tambah_alat(inventori, alat)`, `Kasir.jual_barang(inventori, kode, jumlah)`, dan `Transaksi.jalankan(inventori)`. Karena hubungannya sebatas "memakai" dan tidak ada kepemilikan, jenis relasinya asosiasi.
 
-#### 🔵 Agregasi — `Inventori` ◇— `AlatBangunan` dan `Inventori` ◇— `Pengguna`
+####  Agregasi — `Inventori` ◇— `AlatBangunan` dan `Inventori` ◇— `Pengguna`
 Alat dan pengguna **dibuat di luar** `Inventori`, lalu didaftarkan lewat `tambah_alat()` dan `daftarkan_pengguna()`. `Inventori` hanya menampung referensinya, sehingga alat dan pengguna **tetap hidup walau gudangnya dibubarkan**. Buktinya di DEMO 3: `gudang_cabang` di-`del`, tetapi objek `paku` masih ada dan masih terdaftar di `gudang_pusat`.
 
-#### 🟢 Komposisi — `AlatBangunan` ◆— `CatatanStok`
+####  Komposisi — `AlatBangunan` ◆— `CatatanStok`
 Objek `CatatanStok` **dibuat di dalam** `AlatBangunan` (method `_buat_catatan()`) dan disimpan di `_riwayat`; tidak ada kode luar yang membuatnya. Catatan mutasi tidak punya arti tanpa alat pemiliknya, jadi **hidup-matinya bergantung pada alat**. Buktinya di DEMO 5: setelah objek alat di-`del`, `weakref` ke catatannya sudah kosong (catatan ikut hilang).
 
-#### ❓ Kenapa agregasi vs komposisi?
+####  Kenapa agregasi vs komposisi?
 - **Agregasi** dipilih jika bagian **bisa berdiri sendiri** dan hidup di luar keseluruhannya (alat dan pengguna sudah ada sebelum dan sesudah gudang).
 - **Komposisi** dipilih jika bagian **sepenuhnya dimiliki** dan lahir-mati bersama keseluruhannya (catatan stok milik tepat satu alat).
 
 ---
 
-## 2. 🧩 Abstraksi
+## 2. Abstraksi
 
 Kelas abstrak: **`Transaksi(ABC)`**
 
@@ -81,7 +81,7 @@ class Transaksi(ABC):
     @abstractmethod
     def cetak_bukti(self, alat, total): ...
 
-    def jalankan(self, inventori):      # method konkret, dipakai semua subclass
+    def jalankan(self, inventori):      
         ...
 ```
 
@@ -100,7 +100,7 @@ Abstraksi ini benar-benar dipakai program: `Kasir.jual_barang()` membuat `Transa
 
 ---
 
-## 3. 🔀 Polimorfisme
+## 3. Polimorfisme
 
 ### a. Polimorfisme via pewarisan
 | Method | Di-override oleh | Perilaku berbeda |
@@ -113,10 +113,10 @@ Abstraksi ini benar-benar dipakai program: `Kasir.jual_barang()` membuat `Transa
 Dipanggil dalam satu loop yang berisi objek dari subclass berbeda:
 
 ```python
-for alat in (semen, palu, bor):          # MaterialBangunan, AlatTangan, AlatListrik
+for alat in (semen, palu, bor):          
     alat.tampilkan_info()
 
-for transaksi in (penjualan, restock):   # TransaksiPenjualan, TransaksiRestock
+for transaksi in (penjualan, restock):   
     transaksi.jalankan(gudang_pusat)
 ```
 
@@ -145,7 +145,7 @@ Tidak ada rantai `if/elif` yang mengecek `type()` atau string jenis untuk membed
 
 ---
 
-## ⭐ Nilai Plus: Prinsip SOLID
+## Nilai Plus: Prinsip SOLID
 
 | Prinsip | Bagian program | Penjelasan |
 |---|---|---|
@@ -154,7 +154,7 @@ Tidak ada rantai `if/elif` yang mengecek `type()` atau string jenis untuk membed
 
 ---
 
-## 4. 📸 Screenshot Output
+## 4. Screenshot Output
 
 ![Output abstraksi](img/img1.png)
 ![Output abstraksi](img/img2.png)
